@@ -1,0 +1,63 @@
+<html ng-app="concurso">
+	<head>
+		<title>BOOOOOM</title>
+		<link href="style.css" rel="stylesheet">
+		<link href="animate.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	</head>
+	<body ng-controller="Ctrl" class="ng-cloak">
+		<div class="contenedor">
+			<img src="background.jpg" class="background" />
+			<div class="reloj">{{countdown}}</div>
+			<div class="pregunta bounceInRight" ng-class="{'animated': countdown}">{{pregunta}}</div>
+			<div class="respuesta {{c}} bounceInRight" ng-repeat="(c, r) in respuestas" ng-class="{'animated': countdown}">
+				{{r}}
+			</div>
+			<div class="answers answer1" ng-show="status === 'end'" ng-class="respuestaseleccionada[0]" ng-if="respuestaseleccionada[0]">
+				1<br />
+				<svg class="fa-arrow-down">
+					<use xlink:href="#fa-arrow-down" />
+				</svg>
+			</div>
+			<div class="answers answer2" ng-show="status === 'end'" ng-class="respuestaseleccionada[1]" ng-if="respuestaseleccionada[1]">
+				2<br />
+				<svg class="fa-arrow-down">
+					<use xlink:href="#fa-arrow-down" />
+				</svg>
+			</div>
+			<div class="answers answer3" ng-show="status === 'end'" ng-class="respuestaseleccionada[2]" ng-if="respuestaseleccionada[2]">
+				3<br />
+				<svg class="fa-arrow-down">
+					<use xlink:href="#fa-arrow-down" />
+				</svg>
+			</div>
+			<div class="answers answer4" ng-show="status === 'end'" ng-class="respuestaseleccionada[3]" ng-if="respuestaseleccionada[3]">
+				4<br />
+				<svg class="fa-arrow-down">
+					<use xlink:href="#fa-arrow-down" />
+				</svg>
+			</div>
+			<div class="answers correcta" ng-show="status === 'end'" ng-class="correcta">
+				<svg class="fa-arrow-down">
+					<use xlink:href="#fa-arrow-down" />
+				</svg>				
+			</div>
+			<button type="button" class="btn btn-primary newQuestion" ng-click="newQuestion()">Nueva pregunta</button>
+			<button type="button" class="btn btn-primary fullscreen" ng-click="fullscreen()">Pantalla completa</button>
+		</div>
+		<audio id="tictac">
+			<source src="tictac.ogg" type="audio/ogg" />
+		</audio>
+		<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+			<!-- Font Awesome rights and credits https://fontawesome.com/icons/arrow-down?style=solid -->
+			 <symbol id="fa-arrow-down" viewBox="0 0 448 512"><path d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"/>
+			 </symbol>
+		</svg>
+<!--
+		<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+		<script src="angular.min.js"></script>
+-->
+		<script src="bundle.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>
