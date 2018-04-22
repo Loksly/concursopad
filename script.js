@@ -54,7 +54,7 @@
 			return $http.get('preguntas.json');
 		}])
 		.factory('Preguntas', ['$http', function($http){
-			var Url   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSswSfg4ckiriUQnJ3OUYT0fkaYsk_LNR-2dMzsXJsGgLRmi5reCadYMGsjTV_SRxyHgzZs_fBXLRW-/pub?gid=1006994199&single=true&output=csv';
+			var Url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSswSfg4ckiriUQnJ3OUYT0fkaYsk_LNR-2dMzsXJsGgLRmi5reCadYMGsjTV_SRxyHgzZs_fBXLRW-/pub?gid=1006994199&single=true&output=csv&time=' + (new Date()).getTime();
 			var Items = $http.get(Url).then(function(response){
 				console.debug(response.data);
 
