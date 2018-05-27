@@ -7,19 +7,42 @@
 	const colors = ['azul', 'rojo', 'amarillo', 'verde'];
 	const opciones = ['a', 'b', 'c', 'd', 'e'];
 
+
+	/* snippet code
+	*	@source: https://stackoverflow.com/a/901144
+	*	@credits:: jolly.exe
+	*/
+	function getParameterByName(name, url) { 
+		if (!url) url = window.location.href;
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		    results = regex.exec(url);
+		if (!results) return null;
+		if (!results[2]) return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+
+
 	function buttonPressed(b){
 		return typeof(b) == 'object' ? b.pressed : (b == 1.0);
 	}
 
-	function filtrar(pregunta){
-		return typeof pregunta['Respuesta correcta'] === 'string' && opciones.indexOf(pregunta['Respuesta correcta']) >= 0;
+	function filtrar(test){
+		return function(pregunta){
+			if (typeof test === 'string'){
+				return pregunta.test.trim() === test;
+			}
+
+			return typeof pregunta['Respuesta correcta'] === 'string' && opciones.indexOf(pregunta['Respuesta correcta']) >= 0;
+		}
 	}
 
 	function transform(pregunta){
 		var obj = {
 			pregunta: pregunta['Título de la pregunta'],
 			respuestas: {},
-			correcta: colors[opciones.indexOf(pregunta['Respuesta correcta'])]
+			correcta: colors[opciones.indexOf(pregunta['Respuesta correcta'])],
+			feedback: pregunta.Feedback.trim()
 		};
 
 		colors.forEach(function(color, i){
@@ -55,21 +78,23 @@
 		}])
 		.factory('Preguntas', ['$http', function($http){
 			var Url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSswSfg4ckiriUQnJ3OUYT0fkaYsk_LNR-2dMzsXJsGgLRmi5reCadYMGsjTV_SRxyHgzZs_fBXLRW-/pub?gid=1006994199&single=true&output=csv&time=' + (new Date()).getTime();
-			var Items = $http.get(Url).then(function(response){
-				console.debug(response.data);
+			return $http.get(Url).then(function(response){
+				const rows = d3.csvParse(response.data);
+				
+				console.table(rows.filter(filtrar(getParameterByName('test'))))
 
-				return d3.csvParse(response.data).filter(filtrar).map(transform);
+				return rows.filter(filtrar(getParameterByName('test'))).map(transform);
 			}, function(err){
 				console.error(err);
 			});
 
-			return Items;
 		}])
-		.controller('Ctrl', ['$scope', '$timeout', 'Gamepads', 'Preguntas', '$window', '$requestAnimationFrame', function($scope, $timeout, Gamepads, Preguntas, $window, $requestAnimationFrame){
+		.controller('Ctrl', ['$scope', '$timeout', 'Gamepads', 'Preguntas', '$window', '$location', '$requestAnimationFrame', function($scope, $timeout, Gamepads, Preguntas, $window, $location, $requestAnimationFrame){
 			$scope.countdown = '';
 			$scope.runningQuestion = -1;
 			$scope.gamepads = new Gamepads;
 			$scope.respuestaseleccionada = [];
+			console.log('test', getParameterByName('test'));
 
 			function countdown(){
 				$scope.countdown--;
@@ -103,6 +128,7 @@
 					$scope.pregunta = q.pregunta;
 					$scope.respuestas = q.respuestas;
 					$scope.correcta = q.correcta;
+					$scope.feedback = q.feedback;
 
 					for (var i = 0, j = $scope.gamepads.gamepads.length; i < j; i++){
 						if ($scope.gamepads.gamepads[i]){

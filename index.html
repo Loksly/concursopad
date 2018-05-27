@@ -5,7 +5,7 @@
 	</head>
 	<body ng-controller="Ctrl" class="ng-cloak">
 		<div class="contenedor">
-			<img src="background.jpg" class="background" />
+			<img src="background2.jpg" class="background" />
 			<div class="reloj">{{countdown}}</div>
 			<div class="pregunta bounceInRight" ng-class="{'animated': countdown}">{{pregunta}}</div>
 			<div class="respuesta {{c}} bounceInRight" ng-repeat="(c, r) in respuestas" ng-class="{'animated': countdown}">
@@ -40,6 +40,7 @@
 					<use xlink:href="#fa-arrow-down" />
 				</svg>				
 			</div>
+			<div class="feedback" ng-show="status === 'end'" ng-bind="feedback"></div>
 			<button type="button" class="btn btn-primary newQuestion" ng-click="newQuestion()">Nueva pregunta</button>
 			<button type="button" class="btn btn-primary fullscreen" ng-click="fullscreen()">Pantalla completa</button>
 		</div>

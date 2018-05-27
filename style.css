@@ -10,32 +10,39 @@ html, body{ height: 100%; width:100%; background-color: black !important; font-f
 .background path{ fill: coral}
 
 .pregunta{ 
-	color: black;
-	position: absolute; 
-    text-transform: uppercase; font-size:35px;
-    text-align: center;
-    left: 370px; top: 131px;
-    width:1150px; height:160px;
-	text-shadow: 0 1px 0 #ccc,
-               0 2px 0 #c9c9c9,
-               0 3px 0 #bbb,
-               0 4px 0 #b9b9b9,
-               0 5px 0 #aaa,
-               0 6px 1px rgba(0,0,0,.1),
-               0 0 5px rgba(0,0,0,.1),
-               0 1px 3px rgba(0,0,0,.3),
-               0 3px 5px rgba(0,0,0,.2),
-               0 5px 10px rgba(0,0,0,.25),
-               0 10px 10px rgba(0,0,0,.2),
-               0 20px 20px rgba(0,0,0,.15);
+  color: black;
+  position: absolute; 
+  text-transform: uppercase; font-size:35px;
+  text-align: center;
+  left: 370px; top: 131px;
+  width:1150px; height:160px;
+  text-shadow: 0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
 }
 
 .respuesta{
-    position:absolute; top:873px; width:228px; text-align: center; font-size:40px;
+  position:absolute; top:873px;
+  width: 485px;
+  /* width:228px; */
+  text-align: center; font-size:40px;
 }
 .answers {
 	top:738px;
-	position:absolute; width:228px; font-size:40px; color:white;
+	position:absolute;
+  width: 485px;
+  /* width:228px; */ 
+  font-size:40px;
+  color:white;
 }
 
 .answer1{
@@ -60,13 +67,31 @@ html, body{ height: 100%; width:100%; background-color: black !important; font-f
 	text-align: center; font-size:130px; margin-top: -1em;
 }
 
-.azul{ left:455px}
-.amarillo{ left:745px}
-.rojo{left:1023px}
-.verde{left:1320px}
+.azul{
+  /*left:455px */ 
+  
+  left: 1180px; top: 595px;
+}
+.amarillo{
+/* left:745px */
+  left: 1180px; top: 350px;
+  
+}
+.rojo{
+/*  left:1023px */
+  left: 260px; top: 350px;
+}
+
+.verde{
+/*    left:1320px */
+  left: 260px; top: 595px;
+  
+}
 .naranja{left:1418px}
 
 .reloj{ text-align: center; position: absolute; top: 500px; left: 825px; color:white; width: 280px; height:170px; font-size:100px}
+
+.feedback { position: absolute; left: 5%; width: 90%; background: white; color: black; height: 200px; bottom:100px; font-size: 40px }
 
 .newQuestion{ position: fixed; right: 2em; top: 2em; }
 .fullscreen{ position: fixed; left: 2em; top: 2em; }
