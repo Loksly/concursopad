@@ -38,7 +38,7 @@
 			<div class="answers correcta" ng-show="status === 'end'" ng-class="correcta">
 				<svg class="fa-arrow-down">
 					<use xlink:href="#fa-arrow-down" />
-				</svg>				
+				</svg>
 			</div>
 			<div class="feedback" ng-show="status === 'end'" ng-bind="feedback"></div>
 			<button type="button" class="btn btn-primary newQuestion" ng-click="newQuestion()">Nueva pregunta</button>
@@ -46,6 +46,9 @@
 		</div>
 		<audio id="tictac">
 			<source src="tictac.ogg" type="audio/ogg" />
+		</audio>
+		<audio id="explosion">
+			<source src="explosion.ogg" type="audio/ogg" />
 		</audio>
 		<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
 			<!-- Font Awesome rights and credits https://fontawesome.com/icons/arrow-down?style=solid -->

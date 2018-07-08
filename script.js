@@ -1,8 +1,8 @@
 (function(navigator, document){
 	'use strict';
 
-	const tictac = document.getElementById('tictac');
-	tictac.play();
+    const tictac = document.getElementById('tictac');
+    const explosion = document.getElementById('explosion');
 
 	const colors = ['azul', 'rojo', 'amarillo', 'verde'];
 	const opciones = ['a', 'b', 'c', 'd', 'e'];
@@ -12,7 +12,7 @@
 	*	@source: https://stackoverflow.com/a/901144
 	*	@credits:: jolly.exe
 	*/
-	function getParameterByName(name, url) { 
+	function getParameterByName(name, url) {
 		if (!url) url = window.location.href;
 		name = name.replace(/[\[\]]/g, "\\$&");
 		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -36,6 +36,17 @@
 			return typeof pregunta['Respuesta correcta'] === 'string' && opciones.indexOf(pregunta['Respuesta correcta']) >= 0;
 		}
 	}
+
+    function shuffle (array) {
+        let i = 0, j = 0, temp = null;
+
+        for (i = array.length - 1; i > 0; i -= 1) {
+          j = Math.floor(Math.random() * (i + 1))
+          temp = array[i]
+          array[i] = array[j]
+          array[j] = temp
+        }
+      }
 
 	function transform(pregunta){
 		var obj = {
@@ -77,11 +88,16 @@
 			return $http.get('preguntas.json');
 		}])
 		.factory('Preguntas', ['$http', function($http){
-			var Url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSswSfg4ckiriUQnJ3OUYT0fkaYsk_LNR-2dMzsXJsGgLRmi5reCadYMGsjTV_SRxyHgzZs_fBXLRW-/pub?gid=1006994199&single=true&output=csv&time=' + (new Date()).getTime();
-			return $http.get(Url).then(function(response){
+            var Url = false;
+            if (getParameterByName('user') === 'rozas'){
+                Url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSswSfg4ckiriUQnJ3OUYT0fkaYsk_LNR-2dMzsXJsGgLRmi5reCadYMGsjTV_SRxyHgzZs_fBXLRW-/pub?gid=1471519642&single=true&output=csv&time=' + (new Date()).getTime();
+            } else {
+                Url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSswSfg4ckiriUQnJ3OUYT0fkaYsk_LNR-2dMzsXJsGgLRmi5reCadYMGsjTV_SRxyHgzZs_fBXLRW-/pub?gid=1006994199&single=true&output=csv&time=' + (new Date()).getTime();
+            }
+
+            return $http.get(Url).then(function(response){
 				const rows = d3.csvParse(response.data);
-				
-				console.table(rows.filter(filtrar(getParameterByName('test'))))
+                shuffle(rows);
 
 				return rows.filter(filtrar(getParameterByName('test'))).map(transform);
 			}, function(err){
@@ -112,14 +128,15 @@
 //debugger;https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
 
 			$scope.fullscreen = function(){
-				if (document.webkitFullscreenElement) { 
+				if (document.webkitFullscreenElement) {
 					document.webkitExitFullscreen();
-				} else { 
+				} else {
 					document.body.webkitRequestFullScreen();
-				} 
+				}
 			};
 
 			$scope.newQuestion = function(){
+                tictac.play();
 				$scope.stop();
 				$scope.runningQuestion++;
 
@@ -136,7 +153,7 @@
 						}
 					}
 
-					$scope.countdown = 60;
+					$scope.countdown = 30;
 					$scope.status = 'running';
 					countdown();
 				} else {
@@ -145,7 +162,10 @@
 			};
 
 			$scope.stop = function(){
-				$scope.countdown = '';
+                $scope.countdown = '';
+                if ($scope.status === 'running'){
+                    explosion.play();
+                }
 				$scope.status = 'end';
 			}
 
@@ -176,7 +196,7 @@
 						});
 					}
 				}
-				$requestAnimationFrame(updateLoop);	
+				$requestAnimationFrame(updateLoop);
 			}
 
 			updateLoop();
