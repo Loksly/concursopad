@@ -63,7 +63,7 @@
 		return obj;
 	}
 
-	angular.module('concurso', [])
+	angular.module('concurso', ['ngFitText'])
 		//.config('$sce')
 		.factory('Gamepads', function(){
 			var t;
