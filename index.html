@@ -8,7 +8,7 @@
 			<img src="background2.jpg" class="background" />
 			<div class="reloj">{{countdown}}</div>
 			<div class="pregunta bounceInRight" ng-class="{'animated': countdown}">{{pregunta}}</div>
-			<div class="respuesta {{c}} bounceInRight" ng-repeat="(c, r) in respuestas" ng-class="{'animated': countdown}">
+			<div data-fittext class="respuesta {{c}} bounceInRight" ng-repeat="(c, r) in respuestas" ng-class="{'animated': countdown}">
 				{{r}}
 			</div>
 			<div class="answers answer1" ng-show="status === 'end'" ng-class="respuestaseleccionada[0]" ng-if="respuestaseleccionada[0]">
@@ -60,6 +60,7 @@
 		<script src="angular.min.js"></script>
 -->
 		<script src="bundle.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-fittext/4.2.3/ng-FitText.min.js" integrity="sha256-0lyE016/+l4bZv/Pm/bVvLVntMy2L2kCf7NZsM9HHm0=" crossorigin="anonymous"></script>
 		<script src="script.js"></script>
 	</body>
 </html>
